@@ -15,9 +15,11 @@
 1、服务器与客户端
 
 serverSocket和socket的连接
+
 <img width="337" alt="image" src="https://user-images.githubusercontent.com/71966043/190598786-d655849e-35d9-4e71-a100-752c4cc13077.png">
 
 2、ServerThread和ClientThread介绍
+
 <img width="309" alt="image" src="https://user-images.githubusercontent.com/71966043/190598835-332034e8-cb26-4b8d-876a-859508f5834e.png">
 
 **三、程序机制介绍**
@@ -29,8 +31,8 @@ serverSocket和socket的连接
 这个控件也是让我走了一个很大的坑，首先就是List中的每一项（item）的布局可能是不同的
 
 1.1只发送文字消息时
-
 模拟器接收消息真机发送消息
+
 <img width="205" alt="image" src="https://user-images.githubusercontent.com/71966043/190598871-a2088e3d-46c6-40f8-af3e-33f3a86fe07a.png"><img width="197" alt="image" src="https://user-images.githubusercontent.com/71966043/190598880-2730c697-a0a7-4af3-8fbb-2aaec5d460fb.png">
 
 
@@ -49,9 +51,11 @@ serverSocket和socket的连接
 
 
 所以说ListView中的每一行（每一个item）一共可能会出现六种布局
+
 <img width="213" alt="image" src="https://user-images.githubusercontent.com/71966043/190599051-cdfd8785-7868-411e-b391-7f4c6d00d336.png">
 
 根据getItemViewType()来获取Information中的消息类型
+
 <img width="408" alt="image" src="https://user-images.githubusercontent.com/71966043/190599128-63462597-6e18-4029-930e-1a2049590636.png">
 <img width="395" alt="image" src="https://user-images.githubusercontent.com/71966043/190599139-5cc83567-282b-45d9-a81a-4e5bcbd2abef.png">
 
@@ -60,6 +64,7 @@ getView()中根据type = getItemViewType()来设置item布局
 <img width="408" alt="image" src="https://user-images.githubusercontent.com/71966043/190599148-699ca0f5-224b-45e5-9f4a-659c93dbc3a5.png">
 
 （小部分getView()代码）
+
 <img width="415" alt="image" src="https://user-images.githubusercontent.com/71966043/190599163-2674e0d6-c347-4a83-a2e0-f0d5b7c2f102.png">
 
 2、客户端UI主线与ClientThread子线程的交互
@@ -77,6 +82,7 @@ UI主线程中
 <img width="316" alt="image" src="https://user-images.githubusercontent.com/71966043/190599204-8a27949a-7021-4c5e-b348-8b8789d7cff3.png">
 
 UI主线程中的handle对消息队列中的消息进行处理，更新ListView
+
 <img width="264" alt="image" src="https://user-images.githubusercontent.com/71966043/190599221-9ba2ea1d-aaaf-4f7a-8b61-cc6423896874.png">
 
 UI主线程中:
@@ -88,7 +94,9 @@ UI主线程中:
 网络子线程将UI主线程发送过来的Informaiton对象用writeObject()发送到服务器上，因为writeObject()
 
 不会堵塞，所以这里要用loop机制
+
 <img width="393" alt="image" src="https://user-images.githubusercontent.com/71966043/190599260-e4afb203-2822-4781-a4a4-9f447a69edfd.png">
+
 **关于动态申请权限问题**
 
 权限在AndroidManifest.xml文件中声明，Android 6.0以前，有的APP一股脑声明了各种各样的权限，用户可能没有细看就安装了，于是这些APP就可以为所欲为。Android 6.0把权限分成正常权限和危险权限，AndroidManifest中声明的正常权限系统会自动授予，而危险权限则需要在使用的时候用户明确授予。
@@ -98,6 +106,7 @@ UI主线程中:
 <img width="134" alt="image" src="https://user-images.githubusercontent.com/71966043/190599364-d4f20a37-a73e-487b-b7bc-47236374627f.png">
 
 1.需要申请的所有权限先在AndroidManifest文件中声明
+
 <img width="429" alt="image" src="https://user-images.githubusercontent.com/71966043/190599443-ce399168-d2ab-4c0a-8d4f-2f60504605eb.png">
 
 危险权限需要在代码中动态申请
@@ -111,11 +120,13 @@ UI主线程中:
 弹出一个权限请求对话框
 
 用户点击允许或者禁止后，程序会调用onRequestPermissionsResult()来检查用户是否授予程序申请的危险权限
+
 <img width="451" alt="image" src="https://user-images.githubusercontent.com/71966043/190599486-e1a24d06-88d8-4317-8da8-0ff2710944eb.png">
 
 grantResults数组就是申请的危险权限，数组长度就是一次性申请的危险权限的数量
 
 此时如果用户允许ChatRoom访问相册，程序就会调用openAlbum()
+
 <img width="451" alt="image" src="https://user-images.githubusercontent.com/71966043/190599509-cb6d2c49-399b-401f-9eb3-6cfb1a6d1254.png">
 
 以上就是Android基于socket网络聊天程序的比较重要的几点
